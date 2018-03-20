@@ -1,0 +1,11 @@
+token
+uid
+
+*.log
+*.sql
+*.sqlite
+*.db
+
+**/.ipynb_checkpoints
+
+data/
