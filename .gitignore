@@ -5,6 +5,7 @@ uid
 *.sql
 *.sqlite
 *.db
+*.pickle
 
 **/.ipynb_checkpoints
 
