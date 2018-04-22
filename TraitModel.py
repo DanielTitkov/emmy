@@ -43,7 +43,7 @@ lib = {
     'cert' : ['очевидно','конечно','точно','совершенно',
          'не\s?сомненно','разумееть?ся', 
          'по[\s-]?любому','сто[\s-]?пудово?'],
-    'quan' : ['вс[её]x?','всегда','ни-?когда', 'постоянно', 
+    'quan' : ['вс[её]x?','всегда','ни-?когда', 'постоянн?о', 
          'ник(?:то|ого|ому|ем)', 
          'кажд(?:ый|ая|ой|ому?|ое|ого|ую|ые|ою|ыми?|ых)',
          'всяк(?:ий|ая|ое|ого|ую|ому?|ой|ою|ими?|их|ие)',
@@ -232,8 +232,8 @@ class TraitModel():
     def fit(self, data, mtype='n', summary=True):
         self.mtype = mtype       
         #extract features
-        df_feat = pd.DataFrame.from_records(list(data[self.xname].apply(extract_features, 
-                                                                        morph=self.morph)))
+        df_feat = pd.DataFrame.from_records(list(data[self.xname].apply(
+            extract_features, morph=self.morph)))
         df_feat.index = data.index
         data = pd.concat([data, df_feat], axis=1, join='inner')
         feat_names = list(extract_features('ы', morph=self.morph).keys())
@@ -276,7 +276,8 @@ class TraitModel():
             lm = self.cl(**self.cl_params)
             trait = trait+'_nom' if self.mtype == 'n' else trait          
             self.models[trait] = build_model(self.X_train, self.X_test, 
-                                             self.train.loc[:,trait], self.test.loc[:,trait], 
+                                             self.train.loc[:,trait], 
+                                             self.test.loc[:,trait], 
                                              model=lm)
         
         if summary: self.summary(confusion=False, verbose=False)
@@ -337,7 +338,8 @@ class TraitModel():
                     plt.title("Confusion matrix")
                     plt.xlabel('True')
                     plt.ylabel('Predicted')
-                    plt.title("Confusion matrix for "+y_train.name, fontsize=12, fontweight='bold');
+                    plt.title("Confusion matrix for "+y_train.name, 
+                        fontsize=12, fontweight='bold');
                     plt.show()
         
         if self.mtype == 'c' and all_traits:       
